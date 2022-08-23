@@ -3,16 +3,24 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
-import { app } from '../app';
-import Example from '../database/models/ExampleModel';
+//import { app } from '../app';
 
-import { Response } from 'superagent';
+import Users from '../database/models/users';
+import { userMock, loginMock } from './mock/User';
+//import { Response } from 'superagent';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
+describe('Rota /login', () => {
+  describe('Login com sucesso de um usuário', () => {
+
+  }) 
+  describe('Login com fracasso de um usuário', () => {
+    describe
+  }) 
+
   /**
    * Exemplo do uso de stubs com tipos
    */
