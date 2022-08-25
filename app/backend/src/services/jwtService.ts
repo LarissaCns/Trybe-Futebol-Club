@@ -1,15 +1,17 @@
-import * as jwt from 'jsonwebtoken';
+/* import * as jwt from 'jsonwebtoken';
+// import UserInterface from '../interfaces/user.interface';
 
 require('dotenv/config');
 
 export default class JwtService {
-  static createToken(data: { email: string, password: string }): string {
-    return jwt.sign(data, process.env.JWT_SECRET || 'jwt_token');
+  static createToken(data: { email: string, role: string }): string {
+    const newToken = jwt.sign(data, process.env.JWT_SECRET as string);
+    return newToken;
   }
 
   static validateToken(token: string) {
     try {
-      const data = jwt.verify(token, process.env.JWT_SECRET || 'jwt_token');
+      const data = jwt.verify(token, process.env.JWT_SECRET || 'jwt_token') as jwt.JwtPayload;
       return data;
     } catch (e) {
       const error = new Error('Token must be a valid token');
@@ -17,8 +19,9 @@ export default class JwtService {
       throw error;
     }
   }
-}
+} */
 
+// Modelo com js
 /* const jwtService = {
     createToken: (data) => {
       const token = jwt.sign({ data }, process.env.JWT_SECRET);
