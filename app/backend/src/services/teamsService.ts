@@ -8,4 +8,9 @@ export default class TeamsService {
     return allTeams;
   };
 
+  get = async (id: number) => {
+    const team = await TeamsModel.findByPk(id);
+    return team;
+  };
+
 }
