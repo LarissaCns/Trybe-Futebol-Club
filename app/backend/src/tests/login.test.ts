@@ -1,13 +1,8 @@
-import * as sinon from 'sinon';
-import * as chai from 'chai';
-// @ts-ignore
-import chaiHttp = require('chai-http');
-
-//import { app } from '../app';
-
+import chai, { expect } from 'chai';
+import Sinon from 'sinon';
+import chaiHttp from'chai-http';
+import { app } from '../app';
 import Users from '../database/models/users';
-import { userMock, loginMock } from './mock/User';
-//import { Response } from 'superagent';
 
 chai.use(chaiHttp);
 
