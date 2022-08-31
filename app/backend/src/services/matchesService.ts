@@ -21,4 +21,43 @@ export default class MatchesService {
     return allMatches;
   };
 
+  getByFilter = async (inProgress: string) => {
+    if(inProgress === 'true') {
+      const allMatches = await MatchesModel.findAll(
+        {
+            where: {'inProgress': true},
+            include: [{
+              model: Teams,
+              as: 'teamHome',
+              attributes: ['teamName'],
+            },
+            {
+              model: Teams,
+              as: 'teamAway',
+              attributes: ['teamName'],
+            }],
+          }
+    )
+    return allMatches;
+    }
+    if(inProgress === 'false') {
+      const allMatches = await MatchesModel.findAll(
+        {
+            where: {'inProgress': false},
+            include: [{
+              model: Teams,
+              as: 'teamHome',
+              attributes: ['teamName'],
+            },
+            {
+              model: Teams,
+              as: 'teamAway',
+              attributes: ['teamName'],
+            }],
+          }
+    )
+    return allMatches;
+    }
+    
+  }
 }
