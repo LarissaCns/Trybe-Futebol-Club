@@ -1,5 +1,9 @@
 import MatchesModel from '../database/models/matches';
+import TeamsModel from '../database/models/teams';
 import Teams from '../database/models/teams'
+import * as jwt from 'jsonwebtoken';
+import MatchInterface from '../interfaces/match.interface'
+import TeamInterface from '../interfaces/teams.interface'
 require('dotenv/config');
 
 export default class MatchesService {
@@ -59,5 +63,15 @@ export default class MatchesService {
     return allMatches;
     }
     
+  }
+
+   static async verifyIfExist(id: string): Promise<TeamInterface | null> {
+    const team = await TeamsModel.findByPk(id);
+    return team;
+  }
+
+   static async create(homeTeam: number, awayTeam: number, homeTeamGoals: number, awayTeamGoals: number): Promise<MatchInterface> {
+    const newMatch = await MatchesModel.create({homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true})
+    return newMatch;
   }
 }
