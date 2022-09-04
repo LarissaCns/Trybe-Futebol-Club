@@ -87,6 +87,11 @@ export default class MatchesService {
     return newMatch;
   }
 
+  edit = async (id: string, homeTeamGoals: number, awayTeamGoals: number) => {
+    const matchEdit = await MatchesModel.update({homeTeamGoals, awayTeamGoals}, {where: {id}})
+    return matchEdit;
+  };
+
   finish = async (id: string) => {
     const matchEdit = await MatchesModel.update({inProgress: false}, {where: {id}})
     return matchEdit;

@@ -7,6 +7,7 @@ const router = Router();
 
 router.get('/', matchesController.getAll);
 router.post('/', MatchesController.create);
+router.patch('/:id', matchesController.edit);
 router.patch('/:id/finish', matchesController.finish);
 
 
