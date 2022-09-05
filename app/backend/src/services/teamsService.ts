@@ -12,5 +12,4 @@ export default class TeamsService {
     const team = await TeamsModel.findByPk(id);
     return team;
   };
-
 }
