@@ -1,48 +1,50 @@
-import chai, { expect } from 'chai';
-import Sinon from 'sinon';
-import chaiHttp from'chai-http';
+import * as chai from 'chai';
+import * as sinon from 'sinon';
+// @ts-ignore
+import chaiHttp = require('chai-http');
+const { expect } = chai;
 import { app } from '../app';
 import Users from '../database/models/users';
+import {
+  userMock,
+  loginMock,
+  loginErrorEmailMock,
+  loginErrorPasswordMock,
+} from './mock/User';
 
-chai.use(chaiHttp);
-
-const { expect } = chai;
+chai.use(chaiHttp)
 
 describe('Rota /login', () => {
-  describe('Login com sucesso de um usuário', () => {
+  describe('Realiza o login do usuário', () => {
+    it('Retorne status 200 em caso de sucesso', async () => {
+      sinon.stub(Users, 'findOne').resolves(userMock as Users);
+      sinon.restore();
+      const response = await chai.request(app)
+        .post('/login')
+        .send(loginMock);
 
-  }) 
-  describe('Login com fracasso de um usuário', () => {
-    describe
-  }) 
+      expect(response.status).to.be.equal(200);
+      expect(response.body.token).to.include('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9')
+      sinon.restore();
+    }),
+    it('Retorne status 400 caso o email esteja errado', async () => {
+      const email = await chai.request(app)
+        .post('/login')
+        .send(loginErrorEmailMock);
 
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
+      expect(email.status).to.be.equal(400);
+      expect(email.body.message).to.include('All fields must be filled');
+      sinon.restore();
+    })
 
-  // let chaiHttpResponse: Response;
+    it('Retorne status 400 caso a senha esteja errada', async () => {
+      const password = await chai.request(app)
+        .post('/login')
+        .send(loginErrorPasswordMock);
+      sinon.restore();
 
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
-
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
-
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
-
-  //   expect(...)
-  // });
-
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+      expect(password.status).to.be.equal(400);
+      expect(password.body.message).to.include('All fields must be filled');
+    })
   });
-});
+})

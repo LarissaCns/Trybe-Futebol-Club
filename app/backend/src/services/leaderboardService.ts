@@ -1,4 +1,5 @@
 import db from '../database/models';
+// import LeaderBoardInterface from '../interfaces/leaderboard.interface';
 
 require('dotenv/config');
 
