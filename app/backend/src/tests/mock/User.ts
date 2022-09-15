@@ -9,6 +9,11 @@ const userMock = {
     password: "secret_admin"
   }
 
+  const loginErrorMock = {
+    email: 'admin@admin.com',
+    password: "aaaAAAA"
+  }
+
   const loginErrorEmailMock = {
     email: '',
     password: "admin"
@@ -31,5 +36,6 @@ const userMock = {
     loginErrorEmailMock,
     loginErrorPasswordMock,
     tokenMock,
-    roleMock
+    roleMock,
+    loginErrorMock
   }

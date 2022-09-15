@@ -11,7 +11,8 @@ import {
   loginErrorEmailMock,
   loginErrorPasswordMock,
   tokenMock,
-  roleMock
+  roleMock,
+  loginErrorMock
 } from './mock/User';
 
 chai.use(chaiHttp)
@@ -48,6 +49,16 @@ describe('Rota /login', () => {
       expect(password.status).to.be.equal(400);
       expect(password.body.message).to.include('All fields must be filled');
     })
+
+    it('Retorne status 401 caso o usuário não exista no banco de dados', async () => {
+      const response = await chai.request(app)
+        .post('/login')
+        .send(loginErrorMock);
+      sinon.restore();
+
+      expect(response.status).to.be.equal(401);
+      expect(response.body.message).to.include('Incorrect email or password');
+    })
   });
 
   describe('Rota /login/validate', () => {
@@ -59,6 +70,17 @@ describe('Rota /login', () => {
         .set('authorization', tokenMock.authorization);
       expect(response.status).to.eq(200);
       expect(response.body.role).to.be.equal('admin')
+      sinon.restore();
+    })
+
+    it('Retorna status 401 caso o usuário tenha um token inválido', async () => {
+      sinon.stub(Users, 'findByPk').resolves(roleMock as any);
+
+      const response = await chai.request(app)
+        .get('/login/validate')
+        .set('authorization', 'aaaaaaaaaaaAAAAAAA');
+      expect(response.status).to.eq(401);
+      expect(response.body.message).to.be.equal('Token must be a valid token')
       sinon.restore();
     })
   });
