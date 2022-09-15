@@ -23,10 +23,13 @@ const userMock = {
     "authorization": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
   }
 
+  const roleMock = { role: 'admin' }
+
   export {
     userMock,
     loginMock,
     loginErrorEmailMock,
     loginErrorPasswordMock,
-    tokenMock
+    tokenMock,
+    roleMock
   }

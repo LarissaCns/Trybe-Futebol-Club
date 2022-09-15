@@ -10,6 +10,8 @@ import {
   loginMock,
   loginErrorEmailMock,
   loginErrorPasswordMock,
+  tokenMock,
+  roleMock
 } from './mock/User';
 
 chai.use(chaiHttp)
@@ -45,6 +47,19 @@ describe('Rota /login', () => {
 
       expect(password.status).to.be.equal(400);
       expect(password.body.message).to.include('All fields must be filled');
+    })
+  });
+
+  describe('Rota /login/validate', () => {
+    it('Retorna status 200 caso o usuário tenha um token válido', async () => {
+      sinon.stub(Users, 'findByPk').resolves(roleMock as any);
+
+      const response = await chai.request(app)
+        .get('/login/validate')
+        .set('authorization', tokenMock.authorization);
+      expect(response.status).to.eq(200);
+      expect(response.body.role).to.eq('admin')
+      sinon.restore();
     })
   });
 })
