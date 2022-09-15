@@ -58,7 +58,7 @@ describe('Rota /login', () => {
         .get('/login/validate')
         .set('authorization', tokenMock.authorization);
       expect(response.status).to.eq(200);
-      expect(response.body.role).to.eq('admin')
+      expect(response.body.role).to.be.equal('admin')
       sinon.restore();
     })
   });
